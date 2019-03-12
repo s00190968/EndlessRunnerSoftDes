@@ -8,37 +8,28 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     //Variables
-    [SerializeField]
-    Rigidbody2D rb;
+    public float speed = 5;
     public float jumpForce = 12;
+    private float moveInput;
 
-
-    //movement
-    float moveHorizontal;
-    float moveVertical;
+    private Rigidbody2D rb;
 
     //sprite variables
     bool facingRight = true;
     float lastPosX;
     Vector3 startScale;
 
-    Animator anim;
+    //ground check
+    bool isGrounded;
+    public Transform groundCheck;
+    public float checkRadius;
+    public LayerMask WhatIsGround;
 
     // Use this for initialization
     void Start()
     {
         //rigid body
         rb = GetComponent<Rigidbody2D>();
-
-        //animator stuff
-        anim = GetComponentInChildren<Animator>();
-        anim.SetFloat("Speed", 0);
-
-        if (anim == null)
-        {
-            Debug.Log("There is no animator set in" + this.name);
-            return;
-        }
 
         //object's scale at the start
         startScale = transform.localScale;
@@ -65,19 +56,7 @@ public class PlayerMovement : MonoBehaviour
             flipSprite();
         }
 
-        //animation
-        if (Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Horizontal") > 0)//if horizontal input is pressed
-        {
-            //anim.SetFloat("Speed", Mathf.Abs(moveHorizontal));//makes the minus into positive for the animations
-        }
-        if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("Vertical") > 0)//if vertical input is pressed
-        {
-            //anim.SetFloat("Speed", Mathf.Abs(moveVertical));//makes the minus into positive for the animations
-        }
-        if (Input.GetAxis("Jump") < 0)
-        {
-            moveVertical = 5;
-        }
+        moveInput = Input.GetAxis("Horizontal");
 
         //has to be last in update
         lastPosX = transform.position.x;
@@ -86,10 +65,10 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //cheaper to use this here also helps with sliding controls
+        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        rb.velocity = new Vector2(moveHorizontal * jumpForce, moveVertical * jumpForce);
-
-
+        //ground checks
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, WhatIsGround);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
