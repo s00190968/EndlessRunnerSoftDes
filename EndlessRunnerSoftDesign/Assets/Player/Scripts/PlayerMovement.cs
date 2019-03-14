@@ -9,8 +9,12 @@ public class PlayerMovement : MonoBehaviour
 {
     //Variables
     public float speed = 5;
-    public float jumpForce = 12;
     private float moveInput;
+
+
+    public float jumpForce = 5;
+    public int maxJumps;//how many jumps can be done
+    int extraJumps;//how many are left
 
     private Rigidbody2D rb;
 
@@ -25,7 +29,12 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius;
     public LayerMask WhatIsGround;
 
-    // Use this for initialization
+
+    void Awake()
+    {
+        extraJumps = maxJumps;
+    }
+
     void Start()
     {
         //rigid body
@@ -38,11 +47,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        #region don't worry about this
         if (Input.GetKeyUp(KeyCode.F2))
         {
             ScreenCapture.CaptureScreenshot(DateTime.Now.ToString());
         }
+        #endregion
 
         //change the direction the sprite is facing
         if (lastPosX < transform.position.x && !facingRight)//moves right but isn't facing right
@@ -54,6 +64,13 @@ public class PlayerMovement : MonoBehaviour
         {
             facingRight = false;
             flipSprite();
+        }
+
+        //reset extra jumps
+        //check if was jumping but is now touching ground
+        if(Input.GetAxis("Jump") < 1 && extraJumps <= 0 && isGrounded)
+        {
+            extraJumps = maxJumps;
         }
 
         moveInput = Input.GetAxis("Horizontal");
@@ -69,6 +86,17 @@ public class PlayerMovement : MonoBehaviour
 
         //ground checks
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, WhatIsGround);
+
+        //jumping
+        if (Input.GetAxis("Jump") > 0 && extraJumps > 0)
+        {
+            rb.velocity = Vector3.up * jumpForce;
+            extraJumps--;
+        }
+        else if (Input.GetAxis("Jump") > 0 && extraJumps == 0 && isGrounded)//can jump once if touching ground and extra jumps have been depleted
+        {
+            rb.velocity = Vector3.up * jumpForce;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
