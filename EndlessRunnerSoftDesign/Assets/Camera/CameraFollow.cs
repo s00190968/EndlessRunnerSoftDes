@@ -7,10 +7,10 @@ public class CameraFollow : MonoBehaviour
     public Transform target;//camera target
 
     [SerializeField]//variable is private but can be seen in the editor
-    float smoothSpeed = 15f;//camera's smoothing speed
+    float smoothSpeed = 40f;//camera's smoothing speed
 
     float timeToMove = 1;
-    public float cameraMoveSpeed = 5f;
+    public float cameraMoveSpeed = 30f;
     public Vector3 cameraOffset;
     public Vector3 cameraVelocity;
 
