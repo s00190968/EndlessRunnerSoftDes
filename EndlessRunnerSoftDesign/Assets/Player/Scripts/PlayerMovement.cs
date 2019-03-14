@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5;
     private float moveInput;
 
+    //if character can be controlled manually with keyboard on false it will go forward on it's own
+    public bool manualControlling = false;
 
     public float jumpForce = 5;
     public int maxJumps;//how many jumps can be done
@@ -73,7 +75,15 @@ public class PlayerMovement : MonoBehaviour
             extraJumps = maxJumps;
         }
 
-        moveInput = Input.GetAxis("Horizontal");
+        //for manual controlling
+        if (!manualControlling)
+        {
+            moveInput = .5f;
+        }
+        else
+        {
+            moveInput = Input.GetAxis("Horizontal");
+        }
 
         //has to be last in update
         lastPosX = transform.position.x;
