@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//test comment because of github
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;//camera target
