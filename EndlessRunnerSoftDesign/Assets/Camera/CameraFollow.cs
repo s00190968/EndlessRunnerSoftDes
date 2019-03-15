@@ -7,9 +7,6 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform target;//camera target
 
-    [SerializeField]//variable is private but can be seen in the editor
-    float smoothSpeed = 40f;//camera's smoothing speed
-
     public float timeToMove = .1f; // how fast the camera moves after the player
     public float cameraMoveSpeed = 30f;
     public Vector3 cameraOffset;

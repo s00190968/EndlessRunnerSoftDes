@@ -37,7 +37,6 @@ public class Tiling : MonoBehaviour
         spriteWidth = spriteRenderer.sprite.bounds.size.x;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //are there items on left or right of this one
