@@ -6,20 +6,26 @@ using UnityEngine;
 
 public class TilingAndParallax : MonoBehaviour
 {
-    float backgroundSizeX = 5;
-    Transform camTransform;
-    [SerializeField]
-    Transform[] objects;
-    float viewZone = 10;
-    [SerializeField]
-    int leftIndex;
-    [SerializeField]
-    int rightIndex;
-    float previousCamX;
+    float backgroundSizeX;//width of background object
+    Transform camTransform;//main camera's transform
 
-    public float parallaxSpeedX = 2;
-    public bool scrolling;
-    public bool parallax;
+    [SerializeField]
+    Transform[] objects;//list of the objects to be parallaxed and tiled. Needs at least three of the same kind.
+
+    float viewZone = 10;//the extra offset so that sems won't be seen
+
+    [SerializeField]
+    int leftIndex;//for debugging
+
+    [SerializeField]
+    int rightIndex;//for debugging
+
+    float previousCamX;//camera's previous x position
+
+    public float parallaxSpeedX = 2; //how fast the parallax effect is
+
+    public bool scrolling;//should the objects be scrolled
+    public bool parallax;//should the object be parallaxed
 
     private void Awake()
     {
