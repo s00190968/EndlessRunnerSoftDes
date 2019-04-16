@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
     Vector3 cameraVelocity;//shows up on editor
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         Vector3 desiredPosition = target.position + cameraOffset;
         Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref cameraVelocity, timeToMove);
