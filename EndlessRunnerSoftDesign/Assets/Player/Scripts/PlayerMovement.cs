@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    //animator
+    private Animator anim;
+
     //sprite variables
     bool facingRight = true;
     float lastPosX;
@@ -41,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     {
         //rigid body
         rb = GetComponent<Rigidbody2D>();
+
+        //animator
+        anim = GetComponent<Animator>();
 
         //object's scale at the start
         startScale = transform.localScale;
