@@ -17,6 +17,7 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         LevMas = GameObject.Find("LevelMaster").GetComponent<LevelMaster>();
+        PauseScreen.SetActive(false);
     }
 
     // Update is called once per frame
