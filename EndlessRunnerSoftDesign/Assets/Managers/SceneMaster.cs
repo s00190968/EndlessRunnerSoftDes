@@ -6,18 +6,33 @@ using UnityEngine.UI;
 
 public class SceneMaster : Managers
 {
-    public void OpenGameScene()
+    private static bool gamePaused = false;
+    public static void OpenGameScene()
     {
         SceneManager.LoadScene(1);
     }
 
-    public void OpenMainMenu()
+    public static void OpenMainMenu()
     {
         SceneManager.LoadScene(0);
     }
 
-    public void PauseGame()
+    public static void PauseGame()
     {
+        gamePaused = true;
+    }
 
+    public static void ContinueGame()
+    {
+        if (!gamePaused)
+        {
+            return;
+        }
+        gamePaused = false;
+    }
+
+    public static bool getIsGamePaused()
+    {
+        return gamePaused;
     }
 }
