@@ -5,23 +5,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     //Variables
-    public float speed = 5;
+    public float Speed = 5;
+    public float minSpeed = 1;
     private float moveInput;
 
     //if character can be controlled manually with keyboard on false it will go forward on it's own
     public bool manualControlling = false;
 
-    public float jumpForce = 5;
-    public int maxJumps;//how many jumps can be done
+    public float JumpForce = 12;
+    public int MaxJumps = 2;//how many jumps can be done
     int extraJumps;//how many are left
 
     private Rigidbody2D rb;
-
-    //animator
-    private Animator anim;
 
     //sprite variables
     bool facingRight = true;
@@ -30,26 +29,25 @@ public class PlayerMovement : MonoBehaviour
 
     //ground check
     bool isGrounded;
-    public Transform groundCheck;
-    public float checkRadius;
+    public Transform GroundCheck;
+    public float CheckRadius;
     public LayerMask WhatIsGround;
 
-
-    void Awake()
-    {
-        extraJumps = maxJumps;
-    }
+    //animations
+    PlayerAnimationManager aniMan;
 
     void Start()
     {
         //rigid body
         rb = GetComponent<Rigidbody2D>();
 
-        //animator
-        anim = GetComponent<Animator>();
+        //animation manager
+        aniMan = GetComponent<PlayerAnimationManager>();
 
         //object's scale at the start
         startScale = transform.localScale;
+
+        lastPosX = transform.position.x;
     }
 
     // Update is called once per frame
@@ -76,9 +74,9 @@ public class PlayerMovement : MonoBehaviour
 
         //reset extra jumps
         //check if was jumping but is now touching ground
-        if(Input.GetAxis("Jump") < 1 && extraJumps <= 0 && isGrounded)
+        if(extraJumps <= 0 && isGrounded)
         {
-            extraJumps = maxJumps;
+            extraJumps = MaxJumps;
         }
 
         //for manual controlling
@@ -91,9 +89,9 @@ public class PlayerMovement : MonoBehaviour
             moveInput = Input.GetAxis("Horizontal");
         }
 
-        //update animations
-        anim.SetFloat("speed", rb.velocity.x);
-        anim.SetBool("isJumping", !isGrounded);
+        //animations in animationmanager script
+        aniMan.Speed = rb.velocity.x;
+        aniMan.IsInAir = !isGrounded;
 
         //has to be last in update
         lastPosX = transform.position.x;
@@ -102,20 +100,17 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //cheaper to use this here also helps with sliding controls
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput * Speed, rb.velocity.y);
 
         //ground checks
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, WhatIsGround);
+        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, CheckRadius, WhatIsGround);
 
         //jumping
         if (Input.GetAxis("Jump") > 0 && extraJumps > 0)
         {
-            rb.velocity = Vector3.up * jumpForce;
+            Debug.Log("jumping");
+            rb.velocity = Vector3.up * JumpForce;            
             extraJumps--;
-        }
-        else if (Input.GetAxis("Jump") > 0 && extraJumps == 0 && isGrounded)//can jump once if touching ground and extra jumps have been depleted
-        {
-            rb.velocity = Vector3.up * jumpForce;
         }
     }
 
@@ -140,8 +135,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Die()
+    //speed changing
+    public void IncreaseSpeed(float amount)
     {
-        SceneManager.LoadScene(0);
+        Speed += amount;
+    }
+    public void DecreaseSpeed(float amount)
+    {
+        Speed -= amount;
+
+        if(Speed < minSpeed)
+        {
+            Speed = minSpeed;
+        }
     }
 }
