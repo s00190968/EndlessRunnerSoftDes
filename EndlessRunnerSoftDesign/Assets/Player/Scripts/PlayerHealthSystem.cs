@@ -17,6 +17,7 @@ public class PlayerHealthSystem : HealthSystem
             case "Poison"://when player hit's poison obstacle
                 break;
             case "Harmful Obstacle"://when player hits an obstacle that is supposed to deal damage.
+                DecreaseHealth();
                 break;
         }
     }
