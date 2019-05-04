@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //animations in animationmanager script
-        aniMan.Speed = rb.velocity.x;
+        aniMan.Speed =Math.Abs(rb.velocity.x);
         aniMan.IsInAir = !isGrounded;
 
         //has to be last in update

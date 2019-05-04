@@ -42,7 +42,10 @@ public class TilingAndParallax : MonoBehaviour
         }
         leftIndex = 0;
         rightIndex = objects.Length - 1;
-        backgroundSizeX = objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+        if (scrolling)
+        {
+            backgroundSizeX = objects[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+        }
     }
 
     private void Update()

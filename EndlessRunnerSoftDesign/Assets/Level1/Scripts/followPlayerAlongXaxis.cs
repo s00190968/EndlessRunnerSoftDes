@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class followPlayerAlongXaxis : MonoBehaviour
 {
-    public float Distance;//how distance from this to player
+    public float Distance = 10;//how distance from this to player
     PlayerMovement player;
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame

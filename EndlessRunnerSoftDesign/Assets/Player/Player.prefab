@@ -41,8 +41,8 @@ GameObject:
   - component: {fileID: 2764121722525883506}
   - component: {fileID: 2174219435080584301}
   - component: {fileID: 4913860741616203191}
-  - component: {fileID: 3935101333745595018}
   - component: {fileID: 3006697103103713112}
+  - component: {fileID: 3935101333745595018}
   - component: {fileID: 4827421234166267472}
   m_Layer: 0
   m_Name: Player
@@ -82,6 +82,7 @@ MonoBehaviour:
   minSpeed: 1
   manualControlling: 0
   JumpForce: 12
+  isGrounded: 0
   GroundCheck: {fileID: 0}
   CheckRadius: 0
   WhatIsGround:
@@ -108,6 +109,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!61 &3006697103103713112
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4827421234166267475}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.6415733}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1, y: 1.3}
+    newSize: {x: 5, y: 5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.2776399}
+  m_EdgeRadius: 0
 --- !u!212 &3935101333745595018
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -157,32 +184,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3006697103103713112
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4827421234166267475}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.6415733}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 1.3}
-    newSize: {x: 5, y: 5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.2776399}
-  m_EdgeRadius: 0
 --- !u!95 &4827421234166267472
 Animator:
   serializedVersion: 3

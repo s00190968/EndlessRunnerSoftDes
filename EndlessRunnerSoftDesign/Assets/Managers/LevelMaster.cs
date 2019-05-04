@@ -43,9 +43,9 @@ public class LevelMaster : MonoBehaviour
             if (PlayTime.TotalSeconds > SecondsToAdd && SecondsToAdd > 5)//everytime play time is longer than duration
             {
                 //increase player speed
-                playerMovement.IncreaseSpeed(1);
+                playerMovement.IncreaseSpeed(.4f);
 
-                if (obstacleSpawner.SpawnTime > 2)
+                if (obstacleSpawner.SpawnTime > 1.5)
                 {
                     //spawn obstacles faster
                     obstacleSpawner.SpawnTime -= .2f;
