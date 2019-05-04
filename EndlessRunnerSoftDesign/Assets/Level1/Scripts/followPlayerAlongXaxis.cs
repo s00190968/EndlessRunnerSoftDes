@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class followPlayerAlongXaxis : MonoBehaviour
 {
-
-    GameObject player;
+    public float Distance;//how distance from this to player
+    PlayerMovement player;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(player.transform.position.x,0,0);
+        transform.position = new Vector3(player.transform.position.x - Distance, 0, 0);
     }
 }

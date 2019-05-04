@@ -16,9 +16,7 @@ public class PlayerMovement : MonoBehaviour
     //if character can be controlled manually with keyboard on false it will go forward on it's own
     public bool manualControlling = false;
 
-    public float JumpForce = 12;
-    public int MaxJumps = 2;//how many jumps can be done
-    int extraJumps;//how many are left
+    public float JumpForce = 17;
 
     private Rigidbody2D rb;
 
@@ -28,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 startScale;
 
     //ground check
+    [SerializeField]
     bool isGrounded;
     public Transform GroundCheck;
     public float CheckRadius;
@@ -72,13 +71,6 @@ public class PlayerMovement : MonoBehaviour
             flipSprite();
         }
 
-        //reset extra jumps
-        //check if was jumping but is now touching ground
-        if(extraJumps <= 0 && isGrounded)
-        {
-            extraJumps = MaxJumps;
-        }
-
         //for manual controlling
         if (!manualControlling)
         {
@@ -106,19 +98,10 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(GroundCheck.position, CheckRadius, WhatIsGround);
 
         //jumping
-        if (Input.GetAxis("Jump") > 0 && extraJumps > 0)
+        if (Input.GetAxis("Jump") > 0 && isGrounded)
         {
             Debug.Log("jumping");
-            rb.velocity = Vector3.up * JumpForce;            
-            extraJumps--;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-
+            rb.velocity = Vector3.up * JumpForce;
         }
     }
 

@@ -6,19 +6,21 @@ public class PlayerHealthSystem : HealthSystem
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch (collision.tag)
+        if (collision.CompareTag("Enemy"))
         {
-            case "Enemy":// all enemies deal damage
-                //get script from enemy and take damage value from there
+            // all enemies deal damage
+            //get script from enemy and take damage value from there
+            //decrease health by the damage value in enenmy
+            //collision.GetComponent<ObstacleDyingScript>()
+            DecreaseHealth();
+        }
+        if (collision.CompareTag("Poison"))//when player hit's poison obstacle
+        {
 
-                //decrease health by the damage value in enenmy
-                DecreaseHealth();
-                break;
-            case "Poison"://when player hit's poison obstacle
-                break;
-            case "Harmful Obstacle"://when player hits an obstacle that is supposed to deal damage.
-                DecreaseHealth();
-                break;
+        }
+        if (collision.CompareTag("Harmful Obstacle"))//when player hits an obstacle that is supposed to deal damage.
+        {
+            DecreaseHealth();
         }
     }
 }
