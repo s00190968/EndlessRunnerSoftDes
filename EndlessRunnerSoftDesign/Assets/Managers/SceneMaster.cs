@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SceneMaster : Managers
 {
     private static bool gamePaused = false;
+
     public static void OpenGameScene()
     {
         SceneManager.LoadScene(1);
@@ -14,6 +15,7 @@ public class SceneMaster : Managers
 
     public static void OpenMainMenu()
     {
+        gamePaused = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
@@ -26,10 +28,6 @@ public class SceneMaster : Managers
 
     public static void ContinueGame()
     {
-        if (!gamePaused)
-        {
-            return;
-        }
         gamePaused = false;
         Time.timeScale = 1f; //resumes gametime
     }

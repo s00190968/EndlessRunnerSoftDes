@@ -4,20 +4,57 @@ using UnityEngine;
 
 public class PlayerHealthSystem : HealthSystem
 {
+    //animations
+    PlayerAnimationManager aniMan;
+
+    int timer = 0;
+
+    private void Start()
+    {
+        aniMan = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimationManager>();
+        Health = 1f;
+        IsAlive = true;
+    }
+
+    private void Update()
+    {
+        if (aniMan.WasHit && timer > 100)
+        {
+            aniMan.WasHit = false;
+            timer = 0;
+        }
+        timer++;
+
+        if (!IsAlive)
+        {
+            SceneMaster.OpenMainMenu();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch (collision.tag)
-        {
-            case "Enemy":// all enemies deal damage
-                //get script from enemy and take damage value from there
+        //Debug.Log("player colliding with " + collision.tag + ", animan was hit: " + aniMan.WasHit);
 
-                //decrease health by the damage value in enenmy
-                DecreaseHealth();
-                break;
-            case "Poison"://when player hit's poison obstacle
-                break;
-            case "Harmful Obstacle"://when player hits an obstacle that is supposed to deal damage.
-                break;
+        if (collision.CompareTag("Enemy"))
+        {
+            // all enemies deal damage
+            //get script from enemy and take damage value from there
+            //decrease health by the damage value in enenmy
+            //collision.GetComponent<EnemyController>()
+            DecreaseHealth();
+            aniMan.WasHit = true;
+        }
+        if (collision.CompareTag("Poison"))//when player hit's poison obstacle
+        {
+            aniMan.WasHit = true;
+        }
+        if (collision.CompareTag("Harmful Obstacle"))//when player hits an obstacle that is supposed to deal damage.
+        {
+            DecreaseHealth();
+            aniMan.WasHit = true;
+        }
+        if (collision.CompareTag("Potion"))//gain health
+        {
+            IncreaseHealth();
         }
     }
 }

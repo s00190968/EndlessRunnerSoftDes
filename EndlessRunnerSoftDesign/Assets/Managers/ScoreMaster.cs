@@ -12,8 +12,6 @@ public class ScoreMaster : MonoBehaviour
     TimeSpan duration;
     float lastUpdate;
 
-    public int secondsToAdd = 10;//seconds to be added to duration once game has lasted more than duration
-
     public void ReduceFromPlayScore(int amount)
     {
         PlayScore -= amount;
@@ -22,7 +20,8 @@ public class ScoreMaster : MonoBehaviour
     private void Start()
     {
         levMas = GetComponent<LevelMaster>();
-        duration = new TimeSpan(0, 0, secondsToAdd);
+        duration = new TimeSpan(0, 0, LevelMaster.SecondsToAdd);
+        PlayScore = 0;
     }
 
     private void Update()
@@ -33,13 +32,15 @@ public class ScoreMaster : MonoBehaviour
             lastUpdate = Time.time;//last update is time now
         }
 
-        if(levMas.PlayTime.TotalSeconds > duration.TotalSeconds)//everytime play time is longer than duration
+        if (levMas.PlayTime.TotalSeconds > duration.TotalSeconds)//everytime play time is longer than duration
         {
             PlayScore += (int)duration.TotalSeconds;//add the amount of seconds in duration to playerscore
-            Debug.Log($"Play score: {PlayScore}");
+            //Debug.Log($"Play score: {PlayScore}");
 
-            duration += new TimeSpan(0, 0, secondsToAdd);//increase duration
-            Debug.Log($"New duration is {duration.ToString()}");
+            duration += new TimeSpan(0, 0, LevelMaster.SecondsToAdd);//increase duration
+            //Debug.Log($"New duration is {duration.ToString()}");
+
+            ScoreAmountEverySecond++;
         }
     }
 }

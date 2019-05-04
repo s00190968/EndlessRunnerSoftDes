@@ -10,6 +10,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public float Speed { get; set; }
     public bool  IsInAir { get; set; }
+    public bool WasHit { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -24,5 +25,6 @@ public class PlayerAnimationManager : MonoBehaviour
         //update animations
         anim.SetFloat("speed", Speed);
         anim.SetBool("isJumping", IsInAir);
+        anim.SetBool("hit", WasHit);
     }
 }

@@ -20,7 +20,6 @@ public class RadialHealthUI : MonoBehaviour
         phs = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealthSystem>();
         image = this.GetComponent<Image>();
         imageFill = phs.Health;
-
     }
 
     // Update is called once per frame
